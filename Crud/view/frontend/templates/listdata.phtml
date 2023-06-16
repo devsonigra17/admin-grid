@@ -1,0 +1,91 @@
+<?php 
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$model=$objectManager->create('Dev\Crud\Model\Custom');
+$datacollection=$model->getCollection();
+?>
+<div class="table-wrapper orders-history">
+    <table class="data table table-order-items history" id="my-orders-table">
+        <caption class="table-caption"><?php echo __('Grid Record') ?></caption>
+        <thead>
+        <tr>
+            <th scope="col" class="col id"><?php echo __('ID') ?></th>
+            <th scope="col" class="col fname"><?php echo __('Fname') ?></th>
+            <th scope="col" class="col lname"><?php echo __('Lname') ?></th>
+            <th scope="col" class="col dob"><?php echo __('DOB') ?></th>
+            <th scope="col" class="col image"><?php echo __('Image') ?></th>
+            <th scope="col" class="col gender"><?php echo __('Gender') ?></th>
+            <th scope="col" class="col contact"><?php echo __('Contact') ?></th>
+            <th scope="col" class="col email"><?php echo __('Email') ?></th>
+            <th scope="col" class="col hobby"><?php echo __('Hobbies') ?></th>
+            <th scope="col" class="col action"><?php echo __('Action') ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+    foreach ($datacollection as $data): 
+        $path = $data->getImage();
+        $baseUrl = $this->getUrl();
+        $defaultUrl = $baseUrl.'media/Crud/Images/u/s/user_icon_19.jpg';
+        $imageUrl = $baseUrl.'media/'.$path;
+        if($data->getStatus()==1)
+        {
+    ?>
+        <tr>
+            <td class="col id">
+                <?php echo $data->getId() ?>
+            </td>
+            <td class="col fname">
+                <?php echo $data->getFname() ?>
+            </td>
+            <td class="col lname">
+                <?php echo $data->getLname() ?>
+            </td>
+            <td class="col dob">
+                <?php 
+                if($data->getDob()!=NULL)
+                {
+                    echo date('d-M-Y', strtotime($data->getDob())); 
+                }
+                ?>
+            </td>
+            <td class="col image">
+                <img src="<?php echo $imageUrl;?>" id="crud" onerror="this.onerror=null; this.src='http://magento244.loc/static/version1678518425/adminhtml/Magento/backend/en_US/Magento_Catalog/images/product/placeholder/thumbnail.jpg';">
+            </td>
+            <td class="col gender">
+                <?php
+					if($data->getGender()==1)
+					{
+						echo "Male";
+					}
+					if($data->getGender()==2)
+					{
+						echo "Female";
+					}
+					if($data->getGender()==3)
+					{
+						echo "Others";
+					}
+				?>
+            </td>
+            <td class="col contact">
+                <?php echo $data->getContact(); ?>
+            </td>
+            <td class="col email">
+                <?php echo $data->getEmail(); ?>
+            </td>
+            <td class="col hobby">
+                <?php echo $data->getHobby(); ?>
+            </td>
+            <td class="col action">
+                <form method="get" target="_blank" action="<?php echo $this->getUrl('crud/index/view').'?id='.$data->getId(); ?>">
+                    <input type="hidden" name="id" value="<?php echo $data->getId(); ?>"/>
+                    <button type="submit">View</button>
+                </form>
+            </td>
+        </tr>
+        <?php 
+        }
+    endforeach; ?>
+        </tbody>
+    </table>
+</div>

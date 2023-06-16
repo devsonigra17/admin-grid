@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>View Data</title>
+		<css src="Dev_Crud::css/view.css" />
+	</head>
+	<body>
+        <referenceContainer name="content">
+            <block name="view" class="Dev\Crud\Block\Index\View" template="Dev_Crud::viewdata.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

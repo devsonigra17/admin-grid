@@ -1,0 +1,123 @@
+<?php
+    $id = $_GET['id'];
+    $data = $block->getDataById($id);
+    // echo '<pre>'; print_r($data->getData());
+    if($data->getData()!=NULL)
+    {
+        if($data->getStatus()==1)
+        {
+?>
+<div class="data-container">
+    <div class="img">
+        <?php
+            $url = $this->getUrl();
+            $path = $data->getImage();
+            $image = $url.'media/'.$path;
+            $thumbnail = 'http://magento244.loc/static/version1678518425/adminhtml/Magento/backend/en_US/Magento_Catalog/images/product/placeholder/thumbnail.jpg';
+            if($data->getImage()!=NULL)
+            {
+                echo '<img id='.'crud'.' class='.'center'.' src='.$image.'>';
+            }
+            else
+            {
+                // echo '<img class='.'center'.' src='.$thumbnail.'>';
+            }
+        ?>
+    </div>
+    <div class="main-container">
+        <div class="main-data">
+            <div class="name">
+                <span class="name-data fname">
+                    <?php echo $data->getFname(); ?>
+                </span>
+                <span class="name-data lname">
+                    <?php echo $data->getLname(); ?>
+                </span>
+            </div>
+            <div class="contact">
+                <div class="mob">
+                    <span class="mob">
+                        <a><?php echo $data->getContact(); ?></a>
+                    </span>
+                </div>
+                <div class="email">
+                    <a href="mailto:<?php echo $data->getEmail(); ?>"><?php echo $data->getEmail(); ?></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="data">
+            <div class="data-list">
+                <?php
+                    if($data->getDob()!=NULL)
+                    {
+                ?>
+                <div class="label-data">
+                    DOB:
+                </div>
+                <div class="content-data">
+                <?php 
+                    echo date('d-M-Y', strtotime($data->getDob()));
+                ?>
+                </div>
+                <?php
+                    }
+                ?>
+            </div>
+            <div class="data-list">
+                <?php
+                    if(($data->getGender()!=NULL))
+                    {
+                ?>
+                <div class="label-data">
+                    Gender:
+                </div>
+                <div class="content-data">
+                <?php
+					if($data->getGender()==1)
+					{
+						echo "Male";
+					}
+					if($data->getGender()==2)
+					{
+						echo "Female";
+					}
+					if($data->getGender()==3)
+					{
+						echo "Others";
+					}
+				?>
+                </div>
+                <?php
+                    }
+                ?>
+            </div>
+            <div class="data-list">
+                <?php
+                    if($data->getHobby()!=NULL)
+                    {
+                ?>
+                <div class="label-data">
+                    Hobbies:
+                </div>
+                <div class="content-data">
+                    <?php echo $data->getHobby(); ?>
+                </div>
+                <?php
+                    }
+                }
+                if($data->getStatus()==0){
+                    echo "Status Disabled";
+                }
+            }
+            else
+            {
+                echo "This Row no longer Exists...";
+            }
+                
+                ?>
+            </div>
+        </div>
+    </div>    
+</div>
+
